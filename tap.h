@@ -65,11 +65,11 @@ void    tap_end_todo    (void);
 #define dies_ok(...)     dies_ok_common(1, __VA_ARGS__)
 #define lives_ok(...)    dies_ok_common(0, __VA_ARGS__)
 
-#ifdef _WIN32
-#define like(...)        tap_skip(1, "like is not implemented on Windows")
+#if defined(_WIN32) || defined(_EE)
+#define like(...)        tap_skip(1, "like is not implemented on Windows or PlayStation 2")
 #define unlike(...)      tap_skip(1, "unlike is not implemented on Windows")
 #define dies_ok_common(...) \
-                         tap_skip(1, "Death detection is not supported on Windows")
+                         tap_skip(1, "Death detection is not supported on Windows or PlayStation 2")
 #else
 #define like(...)        like_at_loc(1, __FILE__, __LINE__, __VA_ARGS__, NULL)
 #define unlike(...)      like_at_loc(0, __FILE__, __LINE__, __VA_ARGS__, NULL)

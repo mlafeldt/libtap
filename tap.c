@@ -297,7 +297,7 @@ tap_end_todo () {
     todo_mesg = NULL;
 }
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(_EE)
 #include <sys/mman.h>
 #include <sys/param.h>
 #include <regex.h>
