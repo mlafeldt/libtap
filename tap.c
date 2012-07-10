@@ -23,9 +23,20 @@ vstrdupf (const char *fmt, va_list args) {
     va_copy(args2, args);
     if (!fmt)
         fmt = "";
+#ifdef _EE
+    /*
+     * With vsnprintf, C99 allows str to be NULL to get the number of
+     * characters that would have been written. However, PS2SDK's version
+     * doesn't support this and we need to hard-code a maximum value.
+     */
+    size = 1024;
+    str = malloc(size);
+    vsnprintf(str, size, fmt, args);
+#else
     size = vsnprintf(NULL, 0, fmt, args2) + 2;
     str = malloc(size);
     vsprintf(str, fmt, args);
+#endif
     va_end(args2);
     return str;
 }
