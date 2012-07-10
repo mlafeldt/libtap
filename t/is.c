@@ -1,7 +1,9 @@
 #include "tap.h"
 
 int main () {
+#ifndef _EE
     setvbuf(stdout, NULL, _IONBF, 0);
+#endif
     plan(18);
     is("this", "that", "this is that"); /* bang */
     is("this", "this", "this is this");

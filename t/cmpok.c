@@ -1,7 +1,9 @@
 #include "tap.h"
 
 int main () {
+#ifndef _EE
     setvbuf(stdout, NULL, _IONBF, 0);
+#endif
     plan(9);
     cmp_ok(420, ">", 666);
     cmp_ok(23, "==", 55, "the number 23 is definitely 55");

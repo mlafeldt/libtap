@@ -1,7 +1,9 @@
 #include "tap.h"
 
 int main () {
+#ifndef _EE
     setvbuf(stdout, NULL, _IONBF, 0);
+#endif
     plan(8);
     skip(0, 3, "%s cannot fork", "windows");
     ok(1, "quux");

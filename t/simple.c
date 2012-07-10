@@ -1,7 +1,9 @@
 #include "tap.h"
 
 int main () {
+#ifndef _EE
     setvbuf(stdout, NULL, _IONBF, 0);
+#endif
     plan(24);
     ok(1);
     ok(1);

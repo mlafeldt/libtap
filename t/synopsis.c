@@ -4,7 +4,9 @@ int   foo () {return 3;}
 char *bar () {return "fnord";}
 
 int main () {
+#ifndef _EE
     setvbuf(stdout, NULL, _IONBF, 0);
+#endif
     plan(5);
     ok(foo() == 3);
     is(bar(), "eek");

@@ -1,7 +1,9 @@
 #include "tap.h"
 
 int main () {
+#ifndef _EE
     setvbuf(stdout, NULL, _IONBF, 0);
+#endif
     plan(5);
     ok(1, "sanity");
     dies_ok({int x = 0; x = x/x;}, "can't divide by zero");
