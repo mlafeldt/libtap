@@ -7,9 +7,17 @@ EE_LIB = libtap.a
 EE_OBJS = tap.o
 EE_LIBS =
 
-all: $(EE_LIB)
+TESTS = $(patsubst %.c, %, $(wildcard t/*.c))
+
+all: $(EE_LIB) tests
 
 tap.o: tap.h
+
+tests: $(TESTS)
+
+$(TESTS): %: %.o $(EE_OBJS)
+	$(EE_CC) -mno-crt0 -T$(PS2SDK)/ee/startup/linkfile $(EE_CFLAGS) $(EE_INCS) \
+	-o $@ $(PS2SDK)/ee/startup/crt0.o $(EE_OBJS) $< $(EE_LDFLAGS) $(EE_LIBS)
 
 install: all
 	mkdir -p $(PS2SDK)/ports/include
@@ -18,7 +26,8 @@ install: all
 	cp -f tap.h $(PS2SDK)/ports/include
 
 clean:
-	rm -f $(EE_LIB) $(EE_OBJS)
+	rm -f $(EE_LIB) $(EE_OBJS) $(TESTS) t/*.o
+
 
 include $(PS2SDK)/samples/Makefile.pref
 include $(PS2SDK)/samples/Makefile.eeglobal
