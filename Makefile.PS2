@@ -1,0 +1,24 @@
+EE_INCS +=
+EE_CFLAGS +=
+EE_LDFLAGS +=
+EE_ASFLAGS +=
+
+EE_LIB = libtap.a
+EE_OBJS = tap.o
+EE_LIBS =
+
+all: $(EE_LIB)
+
+tap.o: tap.h
+
+install: all
+	mkdir -p $(PS2SDK)/ports/include
+	mkdir -p $(PS2SDK)/ports/lib
+	cp -f $(EE_LIB) $(PS2SDK)/ports/lib
+	cp -f tap.h $(PS2SDK)/ports/include
+
+clean:
+	rm -f $(EE_LIB) $(EE_OBJS)
+
+include $(PS2SDK)/samples/Makefile.pref
+include $(PS2SDK)/samples/Makefile.eeglobal
