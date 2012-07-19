@@ -1,7 +1,7 @@
 /*
 libtap - Write tests in C
-Copyright (C) 2011 Jake Gelbman <gelbman@gmail.com>
-This file is licensed under the GPL v3
+Copyright 2012 Jake Gelbman <gelbman@gmail.com>
+This file is licensed under the GPLv2
 */
 
 #include <stdio.h>
@@ -35,6 +35,10 @@ vstrdupf (const char *fmt, va_list args) {
 #else
     size = vsnprintf(NULL, 0, fmt, args2) + 2;
     str = malloc(size);
+    if (!str) {
+        perror("malloc error");
+        exit(1);
+    }
     vsprintf(str, fmt, args);
 #endif
     va_end(args2);
@@ -42,7 +46,7 @@ vstrdupf (const char *fmt, va_list args) {
 }
 
 void
-cplan (int tests, const char *fmt, ...) {
+planf (int tests, const char *fmt, ...) {
     expected_tests = tests;
     if (tests == SKIP_ALL) {
         char *why;
@@ -261,7 +265,7 @@ skippy (int n, const char *fmt, ...) {
 }
 
 void
-ctodo (int ignore, const char *fmt, ...) {
+todof (int ignore, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     todo_mesg = vstrdupf(fmt, args);
@@ -269,7 +273,7 @@ ctodo (int ignore, const char *fmt, ...) {
 }
 
 void
-cendtodo () {
+end_todof () {
     free(todo_mesg);
     todo_mesg = NULL;
 }
@@ -284,7 +288,7 @@ cendtodo () {
 #endif
 
 /* Create a shared memory int to keep track of whether a piece of code executed
-dies. to be used in the dies_ok and lives_ok macros  */
+dies. to be used in the dies_ok and lives_ok macros.  */
 int
 tap_test_died (int status) {
     static int *test_died = NULL;

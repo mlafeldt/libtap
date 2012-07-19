@@ -8,16 +8,13 @@ SYNOPSIS
 
     #include <tap.h>
 
-    int   foo () {return 3;}
-    char *bar () {return "fnord";}
-
     int main () {
         plan(5);
-        ok(foo() == 3);
-        is(bar(), "eek");
-        ok(foo() <= 8732, "foo <= %d", 8732);
-        like(bar(), "f(yes|no)r*[a-f]$", "is like");
-        cmp_ok(foo(), ">=", 10, "foo is greater than ten");
+        ok(3 == 3);
+        is("fnord", "eek", "two different strings not that way?");
+        ok(3 <= 8732, "%d <= %d", 3, 8732);
+        like("fnord", "f(yes|no)r*[a-f]$");
+        cmp_ok(3, ">=", 10);
         done_testing();
     }
 
@@ -25,15 +22,15 @@ results in:
 
     1..5
     ok 1
-    not ok 2
-    #   Failed test at synopsis.c line 9.
+    not ok 2 - two different strings not that way?
+    #   Failed test 'two different strings not that way?'
+    #   at t/synopsis.c line 7.
     #          got: 'fnord'
     #     expected: 'eek'
-    ok 3 - foo <= 8732
-    ok 4 - is like
-    not ok 5 - foo is greater than ten
-    #   Failed test 'foo is greater than ten'
-    #   at synopsis.c line 12.
+    ok 3 - 3 <= 8732
+    ok 4
+    not ok 5
+    #   Failed test at t/synopsis.c line 10.
     #     3
     #         >=
     #     10
@@ -88,8 +85,8 @@ FUNCTIONS
 
 -   is(got, expected)
 -   is(got, expected, fmt, ...)
--   isnt(got, expected)
--   isnt(got, expected, fmt, ...)
+-   isnt(got, unexpected)
+-   isnt(got, unexpected, fmt, ...)
 
     Tests that the string you got is what you expected. with isnt, it is the
     reverse.
@@ -123,8 +120,8 @@ FUNCTIONS
 
 -   like(got, expected)
 -   like(got, expected, fmt, ...)
--   unlike(got, expected)
--   unlike(got, expected, fmt, ...)
+-   unlike(got, unexpected)
+-   unlike(got, unexpected, fmt, ...)
 
     Tests that the string you got matches the expected extended POSIX regex.
     unlike is the reverse. These macros are the equivalent of a skip on
@@ -201,16 +198,16 @@ FUNCTIONS
 
 -   skip(test, n)
 -   skip(test, n, fmt, ...)
--   endskip
+-   end_skip
 
     Skip a series of n tests if test is true. You may give a reason why you are
     skipping them or not. The (possibly) skipped tests must occur between the
-    skip and endskip macros.
+    skip and end_skip macros.
 
         skip(TRUE, 2);
         ok(1);
         ok(0);
-        endskip;
+        end_skip;
 
     prints:
 
@@ -219,14 +216,14 @@ FUNCTIONS
 
 -   todo()
 -   todo(fmt, ...)
--   endtodo
+-   end_todo
 
     Specifies a series of tests that you expect to fail because they are not
     yet implemented.
 
         todo()
         ok(0);
-        endtodo;
+        end_todo;
 
     prints:
 
