@@ -20,10 +20,10 @@ $(TESTS): %: %.o $(EE_OBJS)
 	-o $@ $(PS2SDK)/ee/startup/crt0.o $(EE_OBJS) $< $(EE_LDFLAGS) $(EE_LIBS)
 
 install: all
-	mkdir -p $(PS2SDK)/ports/include
-	mkdir -p $(PS2SDK)/ports/lib
-	cp -f $(EE_LIB) $(PS2SDK)/ports/lib
-	cp -f tap.h $(PS2SDK)/ports/include
+	mkdir -p $(DESTDIR)$(PS2SDK)/ports/include
+	mkdir -p $(DESTDIR)$(PS2SDK)/ports/lib
+	cp -f $(EE_LIB) $(DESTDIR)$(PS2SDK)/ports/lib
+	cp -f tap.h $(DESTDIR)$(PS2SDK)/ports/include
 
 clean:
 	rm -f $(EE_LIB) $(EE_OBJS) $(TESTS) t/*.o
