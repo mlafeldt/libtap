@@ -16,8 +16,7 @@ tap.o: tap.h
 tests: $(TESTS)
 
 $(TESTS): %: %.o $(EE_OBJS)
-	$(EE_CC) -mno-crt0 -T$(PS2SDK)/ee/startup/linkfile $(EE_CFLAGS) $(EE_INCS) \
-	-o $@ $(PS2SDK)/ee/startup/crt0.o $(EE_OBJS) $< $(EE_LDFLAGS) $(EE_LIBS)
+	$(EE_CC) $(EE_CFLAGS) $(EE_INCS) -o $@ $(EE_OBJS) $< $(EE_LDFLAGS) $(EE_LIBS)
 
 install: all
 	mkdir -p $(DESTDIR)$(PS2SDK)/ports/include
